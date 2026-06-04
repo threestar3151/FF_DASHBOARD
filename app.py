@@ -7,7 +7,7 @@ from streamlit_gsheets import GSheetsConnection
 # [설정] 여기에 구글 스프레드시트의 '웹에 공유된 링크' 또는 '스프레드시트 URL'을 입력하세요.
 # 서비스 계정이 뷰어 권한으로 접근할 수 있어야 합니다.
 # ==============================================================================
-SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1YiFzCVxGuS7X6gd70WCB0bGRDe_lY0pA/edit?usp=sharing&ouid=102161639467005878904&rtpof=true&sd=true"
+SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1AnT3gDAfx2cGhTCklDerm-gQsbcZWuzH7-mJ-gTpDf4/edit?usp=sharing"
 
 # 1. 페이지 설정 (모바일 화면 최적화)
 st.set_page_config(page_title="GS25 FF 실적 대시보드", page_icon="🏪", layout="wide")
