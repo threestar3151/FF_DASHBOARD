@@ -6,7 +6,7 @@ from streamlit_gsheets import GSheetsConnection
 # ==============================================================================
 # 🎯 [수정 완료] 주소가 중복으로 들어간 부분을 올바르게 수정했습니다.
 # ==============================================================================
-SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1AnT3gDAfx2cGhTCklDerm-gQsbcZWuzH7-mJ-gTpDf4/edit"
+SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1AnT3gDAfx2cGhTCklDerm-gQsbcZWuzH7-mJ-gTpDf4/edit?usp=sharing"
 
 # 1. 모바일 화면에 맞게 화면 넓히기
 st.set_page_config(page_title="GS25 FF 실적 대시보드", page_icon="🏪", layout="wide")
