@@ -1,3 +1,30 @@
+# 임시 디버깅 - 문제 확인 후 삭제
+import streamlit as st
+import requests
+from io import StringIO
+import pandas as pd
+
+st.set_page_config(page_title="디버그", layout="wide")
+
+SPREADSHEET_ID = "1AnT3gDAfx2cGhTCklDerm-gQsbcZWuzH7-mJ-gTpDf4"
+
+st.write("### 🔍 연결 테스트")
+
+for sheet in ["sales", "cost"]:
+    url = f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheet}"
+    try:
+        r = requests.get(url, timeout=10)
+        st.write(f"**{sheet}** 상태코드: {r.status_code}")
+        if r.status_code == 200:
+            df = pd.read_csv(StringIO(r.text), header=None)
+            st.write(f"→ 행 {len(df)}개, 열 {len(df.columns)}개 로딩 성공 ✅")
+            st.write(df.iloc[:3, :10])  # 상위 3행, 10열만 미리보기
+        else:
+            st.error(f"→ 실패: {r.text[:200]}")
+    except Exception as e:
+        st.error(f"→ 예외 발생: {e}")
+
+st.stop()
 import streamlit as st
 import pandas as pd
 import plotly.express as px
