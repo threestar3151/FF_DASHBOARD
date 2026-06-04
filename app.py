@@ -59,8 +59,8 @@ def load_gsheets_data(url):
     conn = st.connection("gsheets", type=GSheetsConnection)
 
     try:
-        df_sales_raw = conn.read(spreadsheet=url, worksheet="일매출")
-        df_cost_raw = conn.read(spreadsheet=url, worksheet="매입매출")
+        df_sales_raw = conn.read(spreadsheet=url, worksheet="sales")
+        df_cost_raw = conn.read(spreadsheet=url, worksheet="cost")
     except Exception as e:
         st.error(f"구글시트 연결 실패: {e}")
         st.stop()
