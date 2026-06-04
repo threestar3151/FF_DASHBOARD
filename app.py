@@ -4,9 +4,9 @@ import plotly.express as px
 from streamlit_gsheets import GSheetsConnection
 
 # ==============================================================================
-# 🎯 [필수 수정] 아래 따옴표 안에 1단계에서 복사한 구글 시트 주소를 붙여넣으세요!
+# 🎯 [수정 완료] 주소가 중복으로 들어간 부분을 올바르게 수정했습니다.
 # ==============================================================================
-SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/https://docs.google.com/spreadsheets/d/1AnT3gDAfx2cGhTCklDerm-gQsbcZWuzH7-mJ-gTpDf4/edit?usp=sharing/edit"
+SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1AnT3gDAfx2cGhTCklDerm-gQsbcZWuzH7-mJ-gTpDf4/edit"
 
 # 1. 모바일 화면에 맞게 화면 넓히기
 st.set_page_config(page_title="GS25 FF 실적 대시보드", page_icon="🏪", layout="wide")
@@ -42,6 +42,9 @@ def load_gsheets_data(url):
         st.stop()
     
     # --- [데이터 전처리 및 정제] ---
+    df_base = df_sales_raw.iloc[2:, 0:9].copy()
+    df_base.columns = ['부문', '지역', '팀', '파트', '점포유형', '최초코드', '현재코드', '점포명', '점포수']
+
     df_base['총매출_25'] = df_sales_raw.iloc[2:, 9:12].astype(float).sum(axis=1)
     df_base['총매출_26'] = df_sales_raw.iloc[2:, 12:15].astype(float).sum(axis=1)
     df_base['FF총매출_25'] = df_sales_raw.iloc[2:, 15:18].astype(float).sum(axis=1)
@@ -70,7 +73,7 @@ def load_gsheets_data(url):
 
 # 구글 시트 정보 가져오기
 try:
-    df = load_data(SPREADSHEET_URL)
+    df = load_gsheets_data(SPREADSHEET_URL)
 except Exception as e:
     st.error("구글 시트 주소가 틀렸거나 접근 권한이 없습니다. 1단계를 다시 확인해주세요!")
     st.stop()
