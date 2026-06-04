@@ -24,12 +24,19 @@ if not st.session_state.authenticated:
             st.error("비밀번호가 일치하지 않습니다.")
     st.stop() # 인증 전에는 아래 코드가 실행되지 않음
 
-# 3. 데이터 로딩 및 전처리 (캐싱을 통해 속도 최적화)
+# 3. 데이터 로딩 (구글 스프레드시트 연동)
 @st.cache_data
-def load_data():
-    # 파일 경로 (동일한 폴더에 위치해야 함)
-    sales_file = "FF 분석(일매출)_0604.xlsx"
-    cost_file = "FF 분석(매입매출)_0604.xlsx"
+def load_data_from_gsheets():
+    # Streamlit 클라우드의 Secrets에 등록된 인증 정보를 자동으로 사용하여 연결합니다.
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    
+    # 구글 스프레드시트 파일의 URL 주소를 입력합니다.
+    # (주의: 서비스 계정 이메일에 '편집자' 또는 '뷰어' 권한이 공유되어 있어야 합니다)
+    spreadsheet_url = "https://docs.google.com/spreadsheets/d/시트_고유_ID_입력/edit#gid=0"
+    
+    # 첫 번째 시트(일매출)와 두 번째 시트(매입매출)를 각각 읽어옵니다.
+    df_sales = conn.read(spreadsheet=spreadsheet_url, worksheet="Sheet1") # 일매출 시트명
+    df_cost = conn.read(spreadsheet=spreadsheet_url, worksheet="Sheet2")  # 매입매출 시트명
     
     # 원본 데이터 로드 (첫 3행은 헤더/메타데이터)
     df_sales = pd.read_excel(sales_file, header=None)
